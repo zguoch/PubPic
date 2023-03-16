@@ -1,0 +1,2704 @@
+1
+00:00:19,279 --> 00:00:23,369
+welcome this is math 676 my name is
+
+2
+00:00:23,369 --> 00:00:24,900
+Wolfgang bangers I'm a professor in the
+
+3
+00:00:24,900 --> 00:00:27,449
+math department at Texas A&M and what I
+
+4
+00:00:27,449 --> 00:00:29,310
+would like to talk about in this class
+
+5
+00:00:29,310 --> 00:00:31,140
+and over the course of the semester is
+
+6
+00:00:31,140 --> 00:00:33,120
+about finite element methods in
+
+7
+00:00:33,120 --> 00:00:35,700
+scientific computing scientific
+
+8
+00:00:35,700 --> 00:00:37,350
+computing is a very broad field
+
+9
+00:00:37,350 --> 00:00:40,680
+it involves modeling and representing
+
+10
+00:00:40,680 --> 00:00:43,710
+the world in terms of computer programs
+
+11
+00:00:43,710 --> 00:00:46,469
+and predicting things that we cannot
+
+12
+00:00:46,469 --> 00:00:50,550
+let's say predict just intuitively and
+
+13
+00:00:50,550 --> 00:00:52,530
+one of the biggest methods in scientific
+
+14
+00:00:52,530 --> 00:00:54,239
+computing is to find an element method
+
+15
+00:00:54,239 --> 00:00:56,309
+so what I would like to do in this
+
+16
+00:00:56,309 --> 00:00:57,840
+semester is take a broad view of
+
+17
+00:00:57,840 --> 00:00:59,699
+scientific computing I would like to
+
+18
+00:00:59,699 --> 00:01:01,170
+introduce you to the finite element
+
+19
+00:01:01,170 --> 00:01:02,820
+method I would like to introduce you to
+
+20
+00:01:02,820 --> 00:01:05,549
+the tools that we use to represent the
+
+21
+00:01:05,549 --> 00:01:08,070
+finite element method on computers but I
+
+22
+00:01:08,070 --> 00:01:10,340
+would also like to introduce you to
+
+23
+00:01:10,340 --> 00:01:13,100
+let's say common approaches to
+
+24
+00:01:13,100 --> 00:01:15,119
+discretizing finite element
+
+25
+00:01:15,119 --> 00:01:16,590
+discretization partial differential
+
+26
+00:01:16,590 --> 00:01:18,210
+equations was the final element methods
+
+27
+00:01:18,210 --> 00:01:19,950
+what to do with linear systems that come
+
+28
+00:01:19,950 --> 00:01:21,540
+out of this and so on and so forth so
+
+29
+00:01:21,540 --> 00:01:23,310
+it's going to be a class that is fairly
+
+30
+00:01:23,310 --> 00:01:25,590
+broad that involves a little bit of
+
+31
+00:01:25,590 --> 00:01:27,330
+theory that involves a lot of
+
+32
+00:01:27,330 --> 00:01:29,400
+programming that involves a lot of
+
+33
+00:01:29,400 --> 00:01:32,390
+knowledge that let's say gives you a
+
+34
+00:01:32,390 --> 00:01:35,340
+bigger view of this field and in
+
+35
+00:01:35,340 --> 00:01:36,689
+particular one of the things that I
+
+36
+00:01:36,689 --> 00:01:38,070
+would like to do is I would like to
+
+37
+00:01:38,070 --> 00:01:39,810
+introduce you to some of the existing
+
+38
+00:01:39,810 --> 00:01:41,820
+software packages that exist out of
+
+39
+00:01:41,820 --> 00:01:42,750
+their idea
+
+40
+00:01:42,750 --> 00:01:45,420
+so in scientific computing what you
+
+41
+00:01:45,420 --> 00:01:47,310
+often encounter is that you need to
+
+42
+00:01:47,310 --> 00:01:49,590
+solve let's say real problems not just
+
+43
+00:01:49,590 --> 00:01:51,780
+model problems for example that applies
+
+44
+00:01:51,780 --> 00:01:54,149
+equation on the unit square but that you
+
+45
+00:01:54,149 --> 00:01:56,100
+want to solve things that are
+
+46
+00:01:56,100 --> 00:01:59,130
+uncomplicated geometries in 3d or that
+
+47
+00:01:59,130 --> 00:02:00,869
+require multi grid solvers or they
+
+48
+00:02:00,869 --> 00:02:03,030
+require higher water methods and so on
+
+49
+00:02:03,030 --> 00:02:05,219
+and so forth and it will turn out to be
+
+50
+00:02:05,219 --> 00:02:07,560
+rather difficult to implement all of
+
+51
+00:02:07,560 --> 00:02:10,020
+these things in a code from scratch
+
+52
+00:02:10,020 --> 00:02:12,780
+and so my goal in this class is among
+
+53
+00:02:12,780 --> 00:02:13,890
+other things that
+
+54
+00:02:13,890 --> 00:02:16,050
+to use you to the libraries that are out
+
+55
+00:02:16,050 --> 00:02:18,170
+there that you can use for this and
+
+56
+00:02:18,170 --> 00:02:20,340
+specifically to one of the libraries
+
+57
+00:02:20,340 --> 00:02:22,470
+that implement the finite element
+
+58
+00:02:22,470 --> 00:02:24,300
+methods and that is a library that I and
+
+59
+00:02:24,300 --> 00:02:25,920
+as it's around the world implement or
+
+60
+00:02:25,920 --> 00:02:30,840
+develop that is called deal tuned so let
+
+61
+00:02:30,840 --> 00:02:32,160
+me start with a little bit of an
+
+62
+00:02:32,160 --> 00:02:34,800
+overview of this class and a rationale
+
+63
+00:02:34,800 --> 00:02:37,410
+for why we would want to consider as
+
+64
+00:02:37,410 --> 00:02:40,470
+your libraries so the topic of this
+
+65
+00:02:40,470 --> 00:02:42,600
+class like I said was to learn how to
+
+66
+00:02:42,600 --> 00:02:44,340
+solve differential equations on
+
+67
+00:02:44,340 --> 00:02:46,709
+computers in particular using the finite
+
+68
+00:02:46,709 --> 00:02:49,800
+element method as a as an example you
+
+69
+00:02:49,800 --> 00:02:51,900
+will sometimes hear me say that I
+
+70
+00:02:51,900 --> 00:02:53,850
+consider to find a difference method or
+
+71
+00:02:53,850 --> 00:02:55,380
+to find a volume method these are the
+
+72
+00:02:55,380 --> 00:02:57,690
+two other big methods for partial
+
+73
+00:02:57,690 --> 00:02:59,730
+differential equations as essentially
+
+74
+00:02:59,730 --> 00:03:01,650
+equivalent to the finite element method
+
+75
+00:03:01,650 --> 00:03:04,850
+and I think that is generally true that
+
+76
+00:03:04,850 --> 00:03:07,560
+most of the finer difference in most of
+
+77
+00:03:07,560 --> 00:03:09,450
+the finite volume methods today can be
+
+78
+00:03:09,450 --> 00:03:11,670
+written as variance or as perturbations
+
+79
+00:03:11,670 --> 00:03:14,280
+of finite element methods so I consider
+
+80
+00:03:14,280 --> 00:03:17,700
+this finite element method as let say an
+
+81
+00:03:17,700 --> 00:03:19,920
+overview of a broader class that
+
+82
+00:03:19,920 --> 00:03:26,160
+contains the attitude so from a
+
+83
+00:03:26,160 --> 00:03:28,560
+practical perspective partial
+
+84
+00:03:28,560 --> 00:03:30,390
+differential in partial differential
+
+85
+00:03:30,390 --> 00:03:32,130
+equations on computers is a very
+
+86
+00:03:32,130 --> 00:03:34,739
+practical field it is not so much
+
+87
+00:03:34,739 --> 00:03:37,110
+concerned with writing down equations
+
+88
+00:03:37,110 --> 00:03:39,690
+and analyzing them very carefully on a
+
+89
+00:03:39,690 --> 00:03:42,450
+piece of paper but it has a lot to do
+
+90
+00:03:42,450 --> 00:03:46,260
+with interacting with people from
+
+91
+00:03:46,260 --> 00:03:48,989
+applied fields so you work with people
+
+92
+00:03:48,989 --> 00:03:51,060
+from nuclear engineering or from
+
+93
+00:03:51,060 --> 00:03:53,790
+aerospace or from biomedical imaging or
+
+94
+00:03:53,790 --> 00:03:57,329
+from the geosciences and what they often
+
+95
+00:03:57,329 --> 00:03:59,700
+have is that they have equations that
+
+96
+00:03:59,700 --> 00:04:02,160
+need to be solved somehow and so the
+
+97
+00:04:02,160 --> 00:04:03,930
+role of computational science or
+
+98
+00:04:03,930 --> 00:04:06,480
+scientific computing oftentimes is to
+
+99
+00:04:06,480 --> 00:04:08,459
+take the equations as they come whether
+
+100
+00:04:08,459 --> 00:04:10,380
+they're pleasant to solve or not which
+
+101
+00:04:10,380 --> 00:04:12,150
+are easy or difficult doesn't really
+
+102
+00:04:12,150 --> 00:04:13,680
+matter that much because we need to
+
+103
+00:04:13,680 --> 00:04:14,730
+solve them because there's an
+
+104
+00:04:14,730 --> 00:04:16,829
+application and so if you want to do
+
+105
+00:04:16,829 --> 00:04:19,410
+this you need to have knowledge in a
+
+106
+00:04:19,410 --> 00:04:24,539
+very broad class of fields so you need
+
+107
+00:04:24,539 --> 00:04:25,860
+to know something about partial
+
+108
+00:04:25,860 --> 00:04:27,570
+differential equations and how to behave
+
+109
+00:04:27,570 --> 00:04:29,990
+viii you need to know a lot about
+
+110
+00:04:29,990 --> 00:04:32,430
+discretization so that means converting
+
+111
+00:04:32,430 --> 00:04:34,200
+an infinite dimensional partial
+
+112
+00:04:34,200 --> 00:04:35,760
+differential equation into a finite
+
+113
+00:04:35,760 --> 00:04:37,590
+dimensional problem you need to know
+
+114
+00:04:37,590 --> 00:04:39,120
+something about the linear solvers and
+
+115
+00:04:39,120 --> 00:04:41,090
+preconditioners that involved in this
+
+116
+00:04:41,090 --> 00:04:45,150
+but then you also need to have a
+
+117
+00:04:45,150 --> 00:04:47,100
+background in programming and oftentimes
+
+118
+00:04:47,100 --> 00:04:49,940
+programming with very large software
+
+119
+00:04:49,940 --> 00:04:53,100
+pieces often times sours and tens of
+
+120
+00:04:53,100 --> 00:04:54,570
+thousands maybe hundreds of thousands of
+
+121
+00:04:54,570 --> 00:04:58,380
+lines of code and so for this you need
+
+122
+00:04:58,380 --> 00:05:00,240
+to know adequate tools you just can't
+
+123
+00:05:00,240 --> 00:05:02,010
+deal with software at this magnitude
+
+124
+00:05:02,010 --> 00:05:05,130
+anymore if all you know is let's say a
+
+125
+00:05:05,130 --> 00:05:07,830
+simple editor for example and there are
+
+126
+00:05:07,830 --> 00:05:09,600
+very good tools for these sort of things
+
+127
+00:05:09,600 --> 00:05:13,380
+out there so this course math 676 will
+
+128
+00:05:13,380 --> 00:05:15,120
+cover all of these to some degree I
+
+129
+00:05:15,120 --> 00:05:17,130
+won't have lectures that talk about
+
+130
+00:05:17,130 --> 00:05:18,840
+let's say the character of differential
+
+131
+00:05:18,840 --> 00:05:20,100
+equations that talk about different
+
+132
+00:05:20,100 --> 00:05:22,440
+kinds of discretization and we'll talk
+
+133
+00:05:22,440 --> 00:05:24,780
+about solvers and preconditioners there
+
+134
+00:05:24,780 --> 00:05:28,110
+will be a lot about how to program how
+
+135
+00:05:28,110 --> 00:05:30,360
+to avoid bugs how to debug things and
+
+136
+00:05:30,360 --> 00:05:32,310
+there will be several lectures about
+
+137
+00:05:32,310 --> 00:05:34,110
+adequate tools so I will introduce you
+
+138
+00:05:34,110 --> 00:05:38,130
+to what we call integrated development
+
+139
+00:05:38,130 --> 00:05:40,860
+environments IDs deserve let's say
+
+140
+00:05:40,860 --> 00:05:42,390
+programming environments that will
+
+141
+00:05:42,390 --> 00:05:44,970
+introduce you to tools for visualization
+
+142
+00:05:44,970 --> 00:05:46,980
+that will introduce you to tools for
+
+143
+00:05:46,980 --> 00:05:50,220
+documenting codes for examples so this
+
+144
+00:05:50,220 --> 00:05:53,000
+is the the field of scientific computing
+
+145
+00:05:53,000 --> 00:05:56,550
+broadly construed and that is the goal
+
+146
+00:05:56,550 --> 00:05:58,530
+of this class that I introduce you into
+
+147
+00:05:58,530 --> 00:06:03,330
+all of these aspects so broadly speaking
+
+148
+00:06:03,330 --> 00:06:06,420
+the goals of this class is to introduce
+
+149
+00:06:06,420 --> 00:06:08,520
+you to widely used methods in scientific
+
+150
+00:06:08,520 --> 00:06:11,010
+computing in particular using this
+
+151
+00:06:11,010 --> 00:06:13,800
+software called DL - that's the software
+
+152
+00:06:13,800 --> 00:06:15,480
+library that supports finding element
+
+153
+00:06:15,480 --> 00:06:19,770
+computations I will show you in quite
+
+154
+00:06:19,770 --> 00:06:21,780
+some detail how to use geo - in practice
+
+155
+00:06:21,780 --> 00:06:24,390
+I will introduce you to let's say how do
+
+156
+00:06:24,390 --> 00:06:26,670
+you write code how do you write programs
+
+157
+00:06:26,670 --> 00:06:30,720
+based on DL - how may be a little bit
+
+158
+00:06:30,720 --> 00:06:33,570
+also how internally these sort of things
+
+159
+00:06:33,570 --> 00:06:35,820
+are represented but then I will also
+
+160
+00:06:35,820 --> 00:06:37,440
+show you modern software development
+
+161
+00:06:37,440 --> 00:06:38,850
+tools and I will teach you a little bit
+
+162
+00:06:38,850 --> 00:06:40,800
+about so from a development practice
+
+163
+00:06:40,800 --> 00:06:43,500
+I think these are very applicable topics
+
+164
+00:06:43,500 --> 00:06:46,490
+that certainly don't just pertain to
+
+165
+00:06:46,490 --> 00:06:50,520
+academics or like me who work as
+
+166
+00:06:50,520 --> 00:06:52,320
+professors but these are all things that
+
+167
+00:06:52,320 --> 00:06:55,140
+are very important also for practical
+
+168
+00:06:55,140 --> 00:06:57,570
+applications in industry in the National
+
+169
+00:06:57,570 --> 00:07:02,820
+Labs in many other fields as well things
+
+170
+00:07:02,820 --> 00:07:05,190
+are not goals of this class are that I'm
+
+171
+00:07:05,190 --> 00:07:07,200
+not going to introduce you to the finite
+
+172
+00:07:07,200 --> 00:07:09,630
+element method itself in particular I'm
+
+173
+00:07:09,630 --> 00:07:11,550
+not going to talk about the mathematical
+
+174
+00:07:11,550 --> 00:07:14,490
+basis for it that is something that I
+
+175
+00:07:14,490 --> 00:07:17,190
+expect you to have heard in a class
+
+176
+00:07:17,190 --> 00:07:20,000
+before or that you have acquired through
+
+177
+00:07:20,000 --> 00:07:23,370
+reading literature similarly I'm not
+
+178
+00:07:23,370 --> 00:07:25,620
+going to show you with the exception of
+
+179
+00:07:25,620 --> 00:07:27,450
+one single lecture where I'm going to
+
+180
+00:07:27,450 --> 00:07:29,340
+talk about templates not going to show
+
+181
+00:07:29,340 --> 00:07:31,650
+you how to program in C++ expect that
+
+182
+00:07:31,650 --> 00:07:34,320
+you already know how to program in C++
+
+183
+00:07:34,320 --> 00:07:37,530
+and if you don't it would be worthwhile
+
+184
+00:07:37,530 --> 00:07:40,590
+to take a short course on this or to
+
+185
+00:07:40,590 --> 00:07:45,620
+take one of the existing books on C++ if
+
+186
+00:07:45,620 --> 00:07:48,120
+you struggle with these sort of concepts
+
+187
+00:07:48,120 --> 00:07:51,120
+here are a number of books that I
+
+188
+00:07:51,120 --> 00:07:54,120
+typically recommend so from a
+
+189
+00:07:54,120 --> 00:07:57,030
+mathematical perspective to the book by
+
+190
+00:07:57,030 --> 00:07:59,130
+Zhu Brenner and Ridgway Scott about the
+
+191
+00:07:59,130 --> 00:08:00,960
+mathematical theory of finite element
+
+192
+00:08:00,960 --> 00:08:03,980
+methods is sort of the standard book
+
+193
+00:08:03,980 --> 00:08:07,320
+from for mathematicians it is not
+
+194
+00:08:07,320 --> 00:08:10,650
+written for engineers for sure but it
+
+195
+00:08:10,650 --> 00:08:13,140
+lays out the theory of finite elements
+
+196
+00:08:13,140 --> 00:08:17,100
+in their analysis there is a book by DJ
+
+197
+00:08:17,100 --> 00:08:21,180
+plays originally from in German but
+
+198
+00:08:21,180 --> 00:08:22,920
+translated into English that's called
+
+199
+00:08:22,920 --> 00:08:25,680
+just finite elements that gives you
+
+200
+00:08:25,680 --> 00:08:28,080
+let's say it's slightly more applied
+
+201
+00:08:28,080 --> 00:08:31,530
+overview of this of this of the finite
+
+202
+00:08:31,530 --> 00:08:33,360
+element method it is not by any stretch
+
+203
+00:08:33,360 --> 00:08:36,630
+and engineering introduction to this but
+
+204
+00:08:36,630 --> 00:08:38,880
+I think it is a little bit more let's
+
+205
+00:08:38,880 --> 00:08:40,950
+say accessible if you're not a
+
+206
+00:08:40,950 --> 00:08:46,560
+mathematician as far as for C++ these
+
+207
+00:08:46,560 --> 00:08:48,330
+standard work is by be honest draw
+
+208
+00:08:48,330 --> 00:08:50,280
+stroke it's called the C++ programming
+
+209
+00:08:50,280 --> 00:08:52,080
+language we are in Strasbourg
+
+210
+00:08:52,080 --> 00:08:53,760
+incidentally is a
+
+211
+00:08:53,760 --> 00:08:55,470
+we're in the computer science department
+
+212
+00:08:55,470 --> 00:08:57,600
+here at the same University at Texas A&M
+
+213
+00:08:57,600 --> 00:08:59,850
+just over there and in one of the
+
+214
+00:08:59,850 --> 00:09:02,220
+buildings here on campus he is the
+
+215
+00:09:02,220 --> 00:09:05,070
+inventor of C++ or let's say the person
+
+216
+00:09:05,070 --> 00:09:08,550
+who originally came up with it in the
+
+217
+00:09:08,550 --> 00:09:10,950
+late 1970's and early 1980s and of
+
+218
+00:09:10,950 --> 00:09:12,810
+course in the mean time in the 30 years
+
+219
+00:09:12,810 --> 00:09:14,820
+since then a lot of people have
+
+220
+00:09:14,820 --> 00:09:16,680
+contributed to it but he is still the
+
+221
+00:09:16,680 --> 00:09:19,830
+one whose book is let's say the standard
+
+222
+00:09:19,830 --> 00:09:23,000
+reference on C++ and is well written is
+
+223
+00:09:23,000 --> 00:09:25,230
+certainly a book worth reading if you
+
+224
+00:09:25,230 --> 00:09:29,660
+are not accounted familiar with C++ yet
+
+225
+00:09:29,660 --> 00:09:35,970
+so let me motivate a little bit one of
+
+226
+00:09:35,970 --> 00:09:39,390
+the big themes of this class namely that
+
+227
+00:09:39,390 --> 00:09:44,100
+we want to use existing approaches and
+
+228
+00:09:44,100 --> 00:09:46,680
+in particular existing software in this
+
+229
+00:09:46,680 --> 00:09:50,070
+class to solve the problems that come
+
+230
+00:09:50,070 --> 00:09:53,160
+out of the Applied Sciences so let me
+
+231
+00:09:53,160 --> 00:09:54,540
+start with partial differential
+
+232
+00:09:54,540 --> 00:09:57,810
+equations of course PDEs appear in all
+
+233
+00:09:57,810 --> 00:10:00,420
+sorts of applications there is of course
+
+234
+00:10:00,420 --> 00:10:02,730
+the let's say classical applications and
+
+235
+00:10:02,730 --> 00:10:04,590
+structural statics and dynamics for
+
+236
+00:10:04,590 --> 00:10:07,220
+example if you want to investigate the
+
+237
+00:10:07,220 --> 00:10:10,410
+deformation of a bridge as a truck
+
+238
+00:10:10,410 --> 00:10:15,960
+drives over it or let's say how a road
+
+239
+00:10:15,960 --> 00:10:19,140
+deforms if a truck is on it how a car
+
+240
+00:10:19,140 --> 00:10:21,660
+deforms if it impacts it as a car or
+
+241
+00:10:21,660 --> 00:10:26,190
+maybe how a carb deforms as it is
+
+242
+00:10:26,190 --> 00:10:28,830
+subjected to the load from the air that
+
+243
+00:10:28,830 --> 00:10:30,840
+passes it these are all described as
+
+244
+00:10:30,840 --> 00:10:31,820
+PDEs
+
+245
+00:10:31,820 --> 00:10:35,310
+similarly in fluid dynamics you can ask
+
+246
+00:10:35,310 --> 00:10:38,460
+the question for example how does the
+
+247
+00:10:38,460 --> 00:10:40,770
+water flow around a ship
+
+248
+00:10:40,770 --> 00:10:44,640
+how does air flow around a car or in an
+
+249
+00:10:44,640 --> 00:10:47,400
+airfoil fluid dynamics also plays a role
+
+250
+00:10:47,400 --> 00:10:49,410
+for example in pipe networks for example
+
+251
+00:10:49,410 --> 00:10:55,950
+in oil pipelines then PDEs are also used
+
+252
+00:10:55,950 --> 00:10:58,110
+in aerodynamics flow around cars
+
+253
+00:10:58,110 --> 00:11:00,500
+airplanes rockets and so on so forth and
+
+254
+00:11:00,500 --> 00:11:03,360
+so now I've given you the the three
+
+255
+00:11:03,360 --> 00:11:06,180
+basic states of matter namely solid
+
+256
+00:11:06,180 --> 00:11:06,840
+fluid
+
+257
+00:11:06,840 --> 00:11:10,110
+and gasps of course PDS also play a role
+
+258
+00:11:10,110 --> 00:11:12,390
+in the fourth state of matter in plasma
+
+259
+00:11:12,390 --> 00:11:14,610
+dynamics for example in astrophysics or
+
+260
+00:11:14,610 --> 00:11:17,250
+when you want to investigate fusion
+
+261
+00:11:17,250 --> 00:11:21,540
+energy these are described by PDEs
+
+262
+00:11:21,540 --> 00:11:24,779
+typically that these are sort of the
+
+263
+00:11:24,779 --> 00:11:26,730
+classical applications of partial
+
+264
+00:11:26,730 --> 00:11:29,250
+differential equations but PDEs appear
+
+265
+00:11:29,250 --> 00:11:32,370
+in many other areas that you don't
+
+266
+00:11:32,370 --> 00:11:34,350
+immediately think of for example in
+
+267
+00:11:34,350 --> 00:11:38,520
+biology people use PDEs to model how
+
+268
+00:11:38,520 --> 00:11:41,760
+bacteria migrate towards a food source
+
+269
+00:11:41,760 --> 00:11:44,310
+for example or maybe away from areas
+
+270
+00:11:44,310 --> 00:11:46,080
+where there's too many bacteria already
+
+271
+00:11:46,080 --> 00:11:50,880
+people also use PD is to model financial
+
+272
+00:11:50,880 --> 00:11:55,110
+instruments for example in the 1990s the
+
+273
+00:11:55,110 --> 00:11:58,589
+Nobel Prize for economics went to two
+
+274
+00:11:58,589 --> 00:12:00,930
+people called blacks and Scholz who
+
+275
+00:12:00,930 --> 00:12:04,920
+found out that you can describe the cost
+
+276
+00:12:04,920 --> 00:12:07,279
+or the price that you should ask for
+
+277
+00:12:07,279 --> 00:12:10,560
+stock options using an equation that
+
+278
+00:12:10,560 --> 00:12:12,570
+today we call the black scores equation
+
+279
+00:12:12,570 --> 00:12:14,339
+that's a partial differential equation
+
+280
+00:12:14,339 --> 00:12:16,980
+and then you can apply PDEs to
+
+281
+00:12:16,980 --> 00:12:19,860
+epidemiology to practically every area
+
+282
+00:12:19,860 --> 00:12:22,740
+you can think of so PDEs are used in a
+
+283
+00:12:22,740 --> 00:12:27,960
+really wide variety of areas and what
+
+284
+00:12:27,960 --> 00:12:30,420
+then the role of computational sciences
+
+285
+00:12:30,420 --> 00:12:33,300
+is to take these equations and solve
+
+286
+00:12:33,300 --> 00:12:35,520
+them whatever the people from the
+
+287
+00:12:35,520 --> 00:12:37,770
+Applied Sciences give to you this is
+
+288
+00:12:37,770 --> 00:12:40,980
+what you want to solve and so the goal
+
+289
+00:12:40,980 --> 00:12:43,020
+of this class is to introduce you to
+
+290
+00:12:43,020 --> 00:12:44,280
+give you a little bit of an overview of
+
+291
+00:12:44,280 --> 00:12:44,940
+PDS
+
+292
+00:12:44,940 --> 00:12:46,830
+and then how you would approach solving
+
+293
+00:12:46,830 --> 00:12:52,050
+them so let's say you somebody gives you
+
+294
+00:12:52,050 --> 00:12:54,209
+an equation and you need to write the
+
+295
+00:12:54,209 --> 00:12:58,790
+software that solves this then there are
+
+296
+00:12:58,790 --> 00:13:02,400
+essentially two approaches either you
+
+297
+00:13:02,400 --> 00:13:04,380
+can take a software that already solves
+
+298
+00:13:04,380 --> 00:13:08,310
+this or you can write it yourself for
+
+299
+00:13:08,310 --> 00:13:11,130
+many applications in particular the ones
+
+300
+00:13:11,130 --> 00:13:13,380
+that are listed at the top here there is
+
+301
+00:13:13,380 --> 00:13:14,820
+standard software out there that's
+
+302
+00:13:14,820 --> 00:13:16,740
+commercially available that that solves
+
+303
+00:13:16,740 --> 00:13:18,780
+these sort of problems so there is
+
+304
+00:13:18,780 --> 00:13:20,250
+software that
+
+305
+00:13:20,250 --> 00:13:22,620
+certainly solves for the elastic
+
+306
+00:13:22,620 --> 00:13:25,380
+deformation of structures there is
+
+307
+00:13:25,380 --> 00:13:27,150
+certainly software for air and water
+
+308
+00:13:27,150 --> 00:13:29,220
+flow and so on and so forth so in these
+
+309
+00:13:29,220 --> 00:13:31,470
+sort of cases there is not much for you
+
+310
+00:13:31,470 --> 00:13:33,810
+to do you should of course use
+
+311
+00:13:33,810 --> 00:13:36,210
+professionally written software that
+
+312
+00:13:36,210 --> 00:13:38,190
+solves whatever application you have but
+
+313
+00:13:38,190 --> 00:13:40,740
+there are two cases where you have to
+
+314
+00:13:40,740 --> 00:13:43,740
+write software yourself namely wait if
+
+315
+00:13:43,740 --> 00:13:45,000
+you're somebody who develops
+
+316
+00:13:45,000 --> 00:13:46,770
+computational methods like me for
+
+317
+00:13:46,770 --> 00:13:51,770
+example then there is by definition no
+
+318
+00:13:51,770 --> 00:13:53,730
+commercial software out there that
+
+319
+00:13:53,730 --> 00:13:56,250
+already does that my goal is to develop
+
+320
+00:13:56,250 --> 00:13:57,900
+numerical methods that are better than
+
+321
+00:13:57,900 --> 00:14:00,780
+the ones that are used in the past or
+
+322
+00:14:00,780 --> 00:14:02,880
+that have been used in the past and so
+
+323
+00:14:02,880 --> 00:14:05,820
+as a consequence I cannot use commercial
+
+324
+00:14:05,820 --> 00:14:08,040
+software because that by definition does
+
+325
+00:14:08,040 --> 00:14:10,830
+not use the sort of modern methods that
+
+326
+00:14:10,830 --> 00:14:13,530
+I'm interested in the other area where
+
+327
+00:14:13,530 --> 00:14:15,270
+you have to write your own software is
+
+328
+00:14:15,270 --> 00:14:17,610
+when you have a non-standard problem so
+
+329
+00:14:17,610 --> 00:14:19,440
+if a biologist comes to you and says I
+
+330
+00:14:19,440 --> 00:14:21,930
+want to simulate how bacteria move on my
+
+331
+00:14:21,930 --> 00:14:25,110
+petri dish then that would be the sort
+
+332
+00:14:25,110 --> 00:14:26,400
+of application where you cannot find
+
+333
+00:14:26,400 --> 00:14:29,160
+commercial software it's just too small
+
+334
+00:14:29,160 --> 00:14:31,050
+a niche market nobody cares about this
+
+335
+00:14:31,050 --> 00:14:33,390
+enough to write a program that might
+
+336
+00:14:33,390 --> 00:14:35,460
+cost a million dollars to develop a more
+
+337
+00:14:35,460 --> 00:14:37,650
+when there's only ten people in the
+
+338
+00:14:37,650 --> 00:14:39,060
+world who care about this particular
+
+339
+00:14:39,060 --> 00:14:41,610
+application or who let's say who care
+
+340
+00:14:41,610 --> 00:14:44,250
+about simulating this on a computer and
+
+341
+00:14:44,250 --> 00:14:46,589
+so in these sort of cases you have a
+
+342
+00:14:46,589 --> 00:14:48,510
+non-standard problem you need to write
+
+343
+00:14:48,510 --> 00:14:51,839
+your own solvers so if you encounter one
+
+344
+00:14:51,839 --> 00:14:54,930
+of these two cases either new methods or
+
+345
+00:14:54,930 --> 00:14:57,450
+non-standard problems you have three
+
+346
+00:14:57,450 --> 00:14:59,400
+different choices either you write
+
+347
+00:14:59,400 --> 00:15:03,420
+something from scratch yourself or you
+
+348
+00:15:03,420 --> 00:15:05,490
+build something from existing components
+
+349
+00:15:05,490 --> 00:15:07,080
+so you take a library that gives you
+
+350
+00:15:07,080 --> 00:15:08,850
+building blocks for example and you put
+
+351
+00:15:08,850 --> 00:15:11,280
+it together and the third one would be
+
+352
+00:15:11,280 --> 00:15:13,050
+you start with an application that
+
+353
+00:15:13,050 --> 00:15:15,000
+solves something similar and you
+
+354
+00:15:15,000 --> 00:15:19,800
+modified the point I want to make in the
+
+355
+00:15:19,800 --> 00:15:21,540
+rest of this lecture essentially is that
+
+356
+00:15:21,540 --> 00:15:23,490
+option one should not be your choice
+
+357
+00:15:23,490 --> 00:15:25,140
+because it might either be very
+
+358
+00:15:25,140 --> 00:15:26,640
+difficult or it might be time-consuming
+
+359
+00:15:26,640 --> 00:15:30,720
+or expensive and I think at least for
+
+360
+00:15:30,720 --> 00:15:33,420
+people like me in mathematics we often
+
+361
+00:15:33,420 --> 00:15:33,870
+have it
+
+362
+00:15:33,870 --> 00:15:35,640
+tendency to still go with option number
+
+363
+00:15:35,640 --> 00:15:37,440
+one because we say we want to control
+
+364
+00:15:37,440 --> 00:15:39,150
+every possible variable we want to
+
+365
+00:15:39,150 --> 00:15:42,450
+really understand what's going on but
+
+366
+00:15:42,450 --> 00:15:44,670
+the argument that that I think I want to
+
+367
+00:15:44,670 --> 00:15:47,970
+make it is part of this class is that we
+
+368
+00:15:47,970 --> 00:15:50,010
+should really not do this because it
+
+369
+00:15:50,010 --> 00:15:51,930
+essentially means that we spend our
+
+370
+00:15:51,930 --> 00:15:54,240
+years of let's say as a graduate student
+
+371
+00:15:54,240 --> 00:15:56,880
+or as a researcher reinventing the wheel
+
+372
+00:15:56,880 --> 00:15:58,350
+far too many times
+
+373
+00:15:58,350 --> 00:15:59,850
+rather what we should be doing is we
+
+374
+00:15:59,850 --> 00:16:01,620
+should build on existing components or
+
+375
+00:16:01,620 --> 00:16:02,880
+if there is something that does
+
+376
+00:16:02,880 --> 00:16:04,890
+something similar already we should just
+
+377
+00:16:04,890 --> 00:16:12,720
+adapt it so because this is too abstract
+
+378
+00:16:12,720 --> 00:16:14,910
+I would like to give you a little bit of
+
+379
+00:16:14,910 --> 00:16:17,370
+an example of why I think that it's
+
+380
+00:16:17,370 --> 00:16:19,410
+worthwhile to build on something
+
+381
+00:16:19,410 --> 00:16:22,830
+existing so if you look at the three the
+
+382
+00:16:22,830 --> 00:16:24,839
+three standard tools for the numerical
+
+383
+00:16:24,839 --> 00:16:26,460
+solution of PDE is this would be the
+
+384
+00:16:26,460 --> 00:16:29,130
+finite element find a volume or find a
+
+385
+00:16:29,130 --> 00:16:32,339
+difference method basically all of them
+
+386
+00:16:32,339 --> 00:16:36,060
+have to do a number of steps so the
+
+387
+00:16:36,060 --> 00:16:37,710
+first thing is that you replace your
+
+388
+00:16:37,710 --> 00:16:39,360
+domain on which you want to solve this
+
+389
+00:16:39,360 --> 00:16:42,450
+PDE by a mesh into it let's say a set of
+
+390
+00:16:42,450 --> 00:16:43,980
+cells that we call a mesh or a
+
+391
+00:16:43,980 --> 00:16:47,790
+triangulation these measures can be
+
+392
+00:16:47,790 --> 00:16:49,950
+fairly complicated so on the right here
+
+393
+00:16:49,950 --> 00:16:51,870
+for example is an example of a measure
+
+394
+00:16:51,870 --> 00:16:55,890
+of a often underground reservoir so
+
+395
+00:16:55,890 --> 00:16:58,020
+these measures can have tens of
+
+396
+00:16:58,020 --> 00:16:59,700
+thousands of cells hundreds of thousands
+
+397
+00:16:59,700 --> 00:17:02,190
+maybe millions or even more and they can
+
+398
+00:17:02,190 --> 00:17:04,679
+have very complicated geometries so just
+
+399
+00:17:04,679 --> 00:17:07,260
+to represent meshes and to create these
+
+400
+00:17:07,260 --> 00:17:09,689
+meshes is certainly no simple task in
+
+401
+00:17:09,689 --> 00:17:14,910
+realistic applications then by and large
+
+402
+00:17:14,910 --> 00:17:17,040
+the way you can see partial differential
+
+403
+00:17:17,040 --> 00:17:19,530
+equations is or let's say a disco times
+
+404
+00:17:19,530 --> 00:17:21,630
+partial differential equation on a mesh
+
+405
+00:17:21,630 --> 00:17:24,089
+is that you have to define balance
+
+406
+00:17:24,089 --> 00:17:26,640
+relations essentially let's say if you
+
+407
+00:17:26,640 --> 00:17:28,590
+think of flow problems for example the
+
+408
+00:17:28,590 --> 00:17:30,179
+balance relationship it would be
+
+409
+00:17:30,179 --> 00:17:33,570
+whatever flows out of a cell must flow
+
+410
+00:17:33,570 --> 00:17:37,860
+in on the other side so most of the PDEs
+
+411
+00:17:37,860 --> 00:17:39,960
+that we write essentially come from
+
+412
+00:17:39,960 --> 00:17:42,330
+these sort of balanced relationships and
+
+413
+00:17:42,330 --> 00:17:43,530
+then when you have these balanced
+
+414
+00:17:43,530 --> 00:17:45,570
+relationships between cells you obtain
+
+415
+00:17:45,570 --> 00:17:47,490
+the typically very large
+
+416
+00:17:47,490 --> 00:17:49,110
+or a non-linear system that you have to
+
+417
+00:17:49,110 --> 00:17:54,450
+store and solve now every code that has
+
+418
+00:17:54,450 --> 00:17:57,809
+to do with solving numerical or
+
+419
+00:17:57,809 --> 00:18:00,809
+numerically solving PDEs has to has to
+
+420
+00:18:00,809 --> 00:18:03,450
+do these steps there's no way around it
+
+421
+00:18:03,450 --> 00:18:06,690
+and if you are tasked with coming up
+
+422
+00:18:06,690 --> 00:18:08,070
+with a code that does this for a
+
+423
+00:18:08,070 --> 00:18:11,280
+particular PDE you will realize of
+
+424
+00:18:11,280 --> 00:18:13,410
+course very quickly that you have only
+
+425
+00:18:13,410 --> 00:18:16,620
+so much time in a day to do this and as
+
+426
+00:18:16,620 --> 00:18:18,270
+a matter of fact you probably also have
+
+427
+00:18:18,270 --> 00:18:20,280
+only so much expertise maybe you're in a
+
+428
+00:18:20,280 --> 00:18:22,320
+an application scientists who know
+
+429
+00:18:22,320 --> 00:18:23,990
+everything knows everything about
+
+430
+00:18:23,990 --> 00:18:26,730
+subsurface flow but you're not
+
+431
+00:18:26,730 --> 00:18:28,350
+completely familiar let's say with
+
+432
+00:18:28,350 --> 00:18:31,170
+algebraic multigrid or with how to
+
+433
+00:18:31,170 --> 00:18:33,030
+define higher order shape functions and
+
+434
+00:18:33,030 --> 00:18:35,370
+so on and so forth and so if you wanted
+
+435
+00:18:35,370 --> 00:18:37,770
+to use modern numerical methods it would
+
+436
+00:18:37,770 --> 00:18:39,809
+be quite a steep learning curve to come
+
+437
+00:18:39,809 --> 00:18:42,540
+up with a code that shows all of these
+
+438
+00:18:42,540 --> 00:18:45,210
+things in let's say in it's full
+
+439
+00:18:45,210 --> 00:18:49,830
+complexity today so what I would like to
+
+440
+00:18:49,830 --> 00:18:51,740
+argue then is because of these
+
+441
+00:18:51,740 --> 00:18:56,070
+restrictions that it's worthwhile to
+
+442
+00:18:56,070 --> 00:18:59,880
+look into into existing libraries in
+
+443
+00:18:59,880 --> 00:19:02,790
+particular because we don't just want to
+
+444
+00:19:02,790 --> 00:19:05,429
+use methods that have been around for 30
+
+445
+00:19:05,429 --> 00:19:07,320
+years for example but we want to use
+
+446
+00:19:07,320 --> 00:19:11,270
+something that is state-of-the-art so
+
+447
+00:19:11,270 --> 00:19:13,200
+typically what I would consider
+
+448
+00:19:13,200 --> 00:19:15,179
+state-of-the-art in numerical PD
+
+449
+00:19:15,179 --> 00:19:17,280
+yesterdays for example that you want to
+
+450
+00:19:17,280 --> 00:19:19,500
+use adaptive measures that you want to
+
+451
+00:19:19,500 --> 00:19:21,630
+use realistic complex geometries higher
+
+452
+00:19:21,630 --> 00:19:23,460
+order elements multi grid solvers that
+
+453
+00:19:23,460 --> 00:19:24,929
+this whole thing should scale to let's
+
+454
+00:19:24,929 --> 00:19:26,850
+say thousands of processors on modern
+
+455
+00:19:26,850 --> 00:19:29,160
+hardware and that you want to get output
+
+456
+00:19:29,160 --> 00:19:32,070
+that is suitable for high quality
+
+457
+00:19:32,070 --> 00:19:36,510
+rendering and if you see this list of
+
+458
+00:19:36,510 --> 00:19:37,740
+course you should ask yourself well how
+
+459
+00:19:37,740 --> 00:19:39,360
+is it possible to make us have them in a
+
+460
+00:19:39,360 --> 00:19:41,130
+single code that is certainly going to
+
+461
+00:19:41,130 --> 00:19:43,200
+take years to implement this and it is
+
+462
+00:19:43,200 --> 00:19:44,940
+true that if you wanted to implement
+
+463
+00:19:44,940 --> 00:19:46,770
+this from scratch yes it would take
+
+464
+00:19:46,770 --> 00:19:48,970
+years
+
+465
+00:19:48,970 --> 00:19:51,429
+to me the question whether just as
+
+466
+00:19:51,429 --> 00:19:53,289
+possible or not it's not a question of
+
+467
+00:19:53,289 --> 00:19:55,600
+feasibility but it is a question of how
+
+468
+00:19:55,600 --> 00:19:58,630
+we develop software so we can ask a
+
+469
+00:19:58,630 --> 00:20:00,039
+question for example should every
+
+470
+00:20:00,039 --> 00:20:01,900
+student develop their own finite element
+
+471
+00:20:01,900 --> 00:20:02,500
+solver
+
+472
+00:20:02,500 --> 00:20:04,330
+we're sure to be reusing what others
+
+473
+00:20:04,330 --> 00:20:07,059
+have done in the past do we insist on
+
+474
+00:20:07,059 --> 00:20:09,070
+implementing things from scratch or do
+
+475
+00:20:09,070 --> 00:20:10,809
+we build an existing libraries and I
+
+476
+00:20:10,809 --> 00:20:13,030
+guess you can already figure what my
+
+477
+00:20:13,030 --> 00:20:16,390
+answers for this should be I think we
+
+478
+00:20:16,390 --> 00:20:19,750
+should reuse what others have done and
+
+479
+00:20:19,750 --> 00:20:22,210
+as a matter of fact there has been quite
+
+480
+00:20:22,210 --> 00:20:24,880
+a shift over the last 10 or 15 years in
+
+481
+00:20:24,880 --> 00:20:28,659
+this regard where in the past we sort of
+
+482
+00:20:28,659 --> 00:20:31,659
+certainly in the community that develops
+
+483
+00:20:31,659 --> 00:20:34,270
+numerical methods we thought that we
+
+484
+00:20:34,270 --> 00:20:36,250
+should just look at model problems and
+
+485
+00:20:36,250 --> 00:20:39,309
+implement things from scratch this has
+
+486
+00:20:39,309 --> 00:20:42,610
+changed I think that today we believe
+
+487
+00:20:42,610 --> 00:20:44,530
+that we should be reusing what others
+
+488
+00:20:44,530 --> 00:20:46,210
+have done because it gives us a better
+
+489
+00:20:46,210 --> 00:20:49,510
+handle on let's say you only wanted to
+
+490
+00:20:49,510 --> 00:20:51,340
+deal with the discretization but you can
+
+491
+00:20:51,340 --> 00:20:54,340
+still reuse a modern numerical solver
+
+492
+00:20:54,340 --> 00:20:56,590
+for the linear system that others have
+
+493
+00:20:56,590 --> 00:21:01,090
+come up with nevertheless there's there
+
+494
+00:21:01,090 --> 00:21:05,919
+is quite some let's say resistance to
+
+495
+00:21:05,919 --> 00:21:08,620
+this idea of reusing libraries and what
+
+496
+00:21:08,620 --> 00:21:09,970
+I would like to do in the next few
+
+497
+00:21:09,970 --> 00:21:12,039
+slides is that I go through some of the
+
+498
+00:21:12,039 --> 00:21:14,080
+arguments that people have made in the
+
+499
+00:21:14,080 --> 00:21:16,570
+past against reusing what others have
+
+500
+00:21:16,570 --> 00:21:18,520
+done I would like to talk about the
+
+501
+00:21:18,520 --> 00:21:25,270
+reasons for this so um let me actually
+
+502
+00:21:25,270 --> 00:21:27,880
+before I say too so just as an as an
+
+503
+00:21:27,880 --> 00:21:30,760
+introduction to existing software there
+
+504
+00:21:30,760 --> 00:21:32,679
+are a number of libraries that will
+
+505
+00:21:32,679 --> 00:21:35,470
+bring up repeatedly in this class so for
+
+506
+00:21:35,470 --> 00:21:37,720
+basic linear algebra the libraries that
+
+507
+00:21:37,720 --> 00:21:40,030
+exist is blast it's a basic linear
+
+508
+00:21:40,030 --> 00:21:43,120
+algebra subsystem or subroutines and
+
+509
+00:21:43,120 --> 00:21:45,640
+lapack for let's say higher order things
+
+510
+00:21:45,640 --> 00:21:48,789
+like computing eigenvectors and
+
+511
+00:21:48,789 --> 00:21:52,120
+eigenvalues of dense matrices then
+
+512
+00:21:52,120 --> 00:21:54,340
+there's it the next higher level would
+
+513
+00:21:54,340 --> 00:21:56,830
+be two libraries that are called Petzi
+
+514
+00:21:56,830 --> 00:22:00,490
+and rellenos that represent vectors in
+
+515
+00:22:00,490 --> 00:22:02,720
+sparse matrices solvers
+
+516
+00:22:02,720 --> 00:22:05,120
+of both of these support parallel
+
+517
+00:22:05,120 --> 00:22:07,910
+computations and then based on this we
+
+518
+00:22:07,910 --> 00:22:09,980
+build libraries like deal to the library
+
+519
+00:22:09,980 --> 00:22:11,390
+that I'm going to talk about in this
+
+520
+00:22:11,390 --> 00:22:15,320
+class that that do all of the meshing
+
+521
+00:22:15,320 --> 00:22:20,930
+and the finite element parts of this all
+
+522
+00:22:20,930 --> 00:22:22,760
+right so to come back to the arguments
+
+523
+00:22:22,760 --> 00:22:25,100
+that people have made against using
+
+524
+00:22:25,100 --> 00:22:28,340
+existing libraries and one of the things
+
+525
+00:22:28,340 --> 00:22:31,790
+that I'm often hear is that in order to
+
+526
+00:22:31,790 --> 00:22:33,500
+use somebody else's software of course
+
+527
+00:22:33,500 --> 00:22:35,060
+you have to learn the conventions that
+
+528
+00:22:35,060 --> 00:22:38,510
+are used in there how it works I need to
+
+529
+00:22:38,510 --> 00:22:39,860
+read through the documentation and
+
+530
+00:22:39,860 --> 00:22:42,050
+people say I'd be much faster if I just
+
+531
+00:22:42,050 --> 00:22:44,210
+wrote all of this myself because really
+
+532
+00:22:44,210 --> 00:22:45,590
+I only want to solve the Laplace
+
+533
+00:22:45,590 --> 00:22:50,600
+equation on unit squared and I think the
+
+534
+00:22:50,600 --> 00:22:52,610
+first part is certainly true you have to
+
+535
+00:22:52,610 --> 00:22:54,590
+learn a piece of software you have to
+
+536
+00:22:54,590 --> 00:22:56,290
+learn the philosophy that's behind us
+
+537
+00:22:56,290 --> 00:22:58,970
+but the second part is not true that
+
+538
+00:22:58,970 --> 00:23:01,160
+you're faster by writing the code
+
+539
+00:23:01,160 --> 00:23:03,800
+yourself because today in these
+
+540
+00:23:03,800 --> 00:23:05,450
+libraries that are just introduced to
+
+541
+00:23:05,450 --> 00:23:07,610
+you on the previous slide is that there
+
+542
+00:23:07,610 --> 00:23:10,460
+is so much functionality in there you
+
+543
+00:23:10,460 --> 00:23:12,020
+know hundreds of thousands of lines of
+
+544
+00:23:12,020 --> 00:23:13,940
+code that you can use that you don't
+
+545
+00:23:13,940 --> 00:23:16,340
+have to implement yourself and to just
+
+546
+00:23:16,340 --> 00:23:18,350
+give you an example of this if you think
+
+547
+00:23:18,350 --> 00:23:21,740
+about how today we use MATLAB where we
+
+548
+00:23:21,740 --> 00:23:23,630
+just plug and play and we put things
+
+549
+00:23:23,630 --> 00:23:26,450
+together and it all works we can write
+
+550
+00:23:26,450 --> 00:23:32,020
+code so fast in MATLAB today that the
+
+551
+00:23:32,020 --> 00:23:34,340
+maybe they're a little bit slower but
+
+552
+00:23:34,340 --> 00:23:36,080
+the time to actually come up with a
+
+553
+00:23:36,080 --> 00:23:38,380
+program is so much faster
+
+554
+00:23:38,380 --> 00:23:40,610
+essentially the libraries that I had on
+
+555
+00:23:40,610 --> 00:23:42,200
+the previous slide allow you to do these
+
+556
+00:23:42,200 --> 00:23:44,030
+sort of things for complicated finite
+
+557
+00:23:44,030 --> 00:23:46,340
+element solvers as well they provide you
+
+558
+00:23:46,340 --> 00:23:47,750
+with the building blocks and you can
+
+559
+00:23:47,750 --> 00:23:49,780
+just plug them together however you want
+
+560
+00:23:49,780 --> 00:23:53,510
+of course ultimately what it comes down
+
+561
+00:23:53,510 --> 00:23:57,950
+is this so if you plot it progress over
+
+562
+00:23:57,950 --> 00:24:01,010
+time for doing it yourself and using
+
+563
+00:24:01,010 --> 00:24:02,840
+existing software and you could plot
+
+564
+00:24:02,840 --> 00:24:06,640
+something like a straight red line for
+
+565
+00:24:06,640 --> 00:24:09,410
+whatever you write yourself because you
+
+566
+00:24:09,410 --> 00:24:11,780
+know your speed you know what what time
+
+567
+00:24:11,780 --> 00:24:14,870
+you have if you were to use somebody
+
+568
+00:24:14,870 --> 00:24:16,130
+else's code there
+
+569
+00:24:16,130 --> 00:24:20,570
+and there would be a learning curve
+
+570
+00:24:20,570 --> 00:24:22,520
+right in the beginning you would be much
+
+571
+00:24:22,520 --> 00:24:25,850
+slower and because you had to learn how
+
+572
+00:24:25,850 --> 00:24:27,320
+this whole system works but then it
+
+573
+00:24:27,320 --> 00:24:29,450
+comes a point where you become much
+
+574
+00:24:29,450 --> 00:24:31,310
+faster because you can use what you
+
+575
+00:24:31,310 --> 00:24:33,830
+understand is already in there and the
+
+576
+00:24:33,830 --> 00:24:35,240
+question of course is where that
+
+577
+00:24:35,240 --> 00:24:38,210
+crossover point is and I've been in this
+
+578
+00:24:38,210 --> 00:24:39,590
+field long enough and I've taught this
+
+579
+00:24:39,590 --> 00:24:41,930
+class and a number of times so I can
+
+580
+00:24:41,930 --> 00:24:43,460
+tell you that that crossover point is
+
+581
+00:24:43,460 --> 00:24:45,350
+that approximately two to four weeks if
+
+582
+00:24:45,350 --> 00:24:47,240
+you sit down as a student and all you do
+
+583
+00:24:47,240 --> 00:24:49,940
+is try to learn that software as opposed
+
+584
+00:24:49,940 --> 00:24:51,920
+to sit down and all you do is write your
+
+585
+00:24:51,920 --> 00:24:56,060
+own software then that takes you two to
+
+586
+00:24:56,060 --> 00:24:58,520
+four weeks before you get faster by
+
+587
+00:24:58,520 --> 00:25:00,560
+using something else than if you had to
+
+588
+00:25:00,560 --> 00:25:02,660
+write it yourself now if you think about
+
+589
+00:25:02,660 --> 00:25:05,000
+that the PhD takes three to four years
+
+590
+00:25:05,000 --> 00:25:07,850
+then you can immediately see how much
+
+591
+00:25:07,850 --> 00:25:10,670
+faster you would be if you used or how
+
+592
+00:25:10,670 --> 00:25:13,280
+much more you could achieve if you use
+
+593
+00:25:13,280 --> 00:25:16,760
+what other people have done so our
+
+594
+00:25:16,760 --> 00:25:19,340
+experience is that if you used these
+
+595
+00:25:19,340 --> 00:25:20,960
+existing libraries it's quite realistic
+
+596
+00:25:20,960 --> 00:25:25,070
+for example to have a PhD thesis that
+
+597
+00:25:25,070 --> 00:25:27,920
+contains or that that is based on a
+
+598
+00:25:27,920 --> 00:25:30,110
+program that works in - in 2d and 3d
+
+599
+00:25:30,110 --> 00:25:32,780
+uses complex geometries uses higher
+
+600
+00:25:32,780 --> 00:25:34,760
+order elements uses multi grid solvers
+
+601
+00:25:34,760 --> 00:25:36,260
+and preconditioners and so on and so
+
+602
+00:25:36,260 --> 00:25:36,680
+forth
+
+603
+00:25:36,680 --> 00:25:38,210
+if you did this from scratch it would
+
+604
+00:25:38,210 --> 00:25:40,130
+certainly take you ten or more years to
+
+605
+00:25:40,130 --> 00:25:43,760
+do this from a faculty perspective would
+
+606
+00:25:43,760 --> 00:25:47,090
+often hear is that colleagues tell me
+
+607
+00:25:47,090 --> 00:25:48,080
+that they want their students to
+
+608
+00:25:48,080 --> 00:25:50,780
+understand what they do and that's why
+
+609
+00:25:50,780 --> 00:25:51,980
+they let them write everything from
+
+610
+00:25:51,980 --> 00:25:53,750
+scratch and I think there is value to
+
+611
+00:25:53,750 --> 00:25:56,450
+this to a certain degree but that if you
+
+612
+00:25:56,450 --> 00:25:58,340
+know how quadrature works in 2d there's
+
+613
+00:25:58,340 --> 00:26:00,920
+really no weight why you need to learn
+
+614
+00:26:00,920 --> 00:26:03,740
+to do it again in 3d so the answer would
+
+615
+00:26:03,740 --> 00:26:05,960
+be let them write a toy code where they
+
+616
+00:26:05,960 --> 00:26:08,540
+understand how it works and then after
+
+617
+00:26:08,540 --> 00:26:10,310
+three months when they when they do know
+
+618
+00:26:10,310 --> 00:26:11,930
+how it works they throw it away and
+
+619
+00:26:11,930 --> 00:26:14,150
+start again based on some existing
+
+620
+00:26:14,150 --> 00:26:19,340
+software similar argument I hear is that
+
+621
+00:26:19,340 --> 00:26:22,010
+people say well you know I don't know if
+
+622
+00:26:22,010 --> 00:26:24,230
+these software's have packages have bugs
+
+623
+00:26:24,230 --> 00:26:28,020
+I know that you know I can trust my own
+
+624
+00:26:28,020 --> 00:26:30,700
+software I don't I don't have bugs in my
+
+625
+00:26:30,700 --> 00:26:32,890
+code the answer to this certainly is
+
+626
+00:26:32,890 --> 00:26:34,750
+while you can't be serious right I mean
+
+627
+00:26:34,750 --> 00:26:37,510
+we all make bugs of course your software
+
+628
+00:26:37,510 --> 00:26:39,940
+has bugs you delude yourself if you do
+
+629
+00:26:39,940 --> 00:26:42,250
+believe you that you don't but the real
+
+630
+00:26:42,250 --> 00:26:43,960
+answer of course is that the packages
+
+631
+00:26:43,960 --> 00:26:46,030
+that I've been talking about it that I
+
+632
+00:26:46,030 --> 00:26:47,530
+will talk about during the course of
+
+633
+00:26:47,530 --> 00:26:49,750
+this class are written by people who
+
+634
+00:26:49,750 --> 00:26:51,490
+have a lot of experience we have done
+
+635
+00:26:51,490 --> 00:26:54,120
+this for many years the software
+
+636
+00:26:54,120 --> 00:26:57,610
+packages have extensive test suits for
+
+637
+00:26:57,610 --> 00:27:00,520
+example do two runs approximately 2,700
+
+638
+00:27:00,520 --> 00:27:03,790
+2,700 tests after every single change to
+
+639
+00:27:03,790 --> 00:27:06,880
+the codebase and so you can believe that
+
+640
+00:27:06,880 --> 00:27:10,720
+there is a lot more let's say certainty
+
+641
+00:27:10,720 --> 00:27:13,630
+that there are fewer bugs in the
+
+642
+00:27:13,630 --> 00:27:15,640
+software again what you probably would
+
+643
+00:27:15,640 --> 00:27:19,210
+be able to do yourself so to conclude
+
+644
+00:27:19,210 --> 00:27:23,170
+this when you have to implement software
+
+645
+00:27:23,170 --> 00:27:25,150
+for a particular problem for example
+
+646
+00:27:25,150 --> 00:27:26,980
+because you want to develop new methods
+
+647
+00:27:26,980 --> 00:27:28,630
+or because you have a non-standard
+
+648
+00:27:28,630 --> 00:27:32,170
+problem really try to reuse what others
+
+649
+00:27:32,170 --> 00:27:33,250
+have done already there are many
+
+650
+00:27:33,250 --> 00:27:35,530
+high-quality open-source libraries that
+
+651
+00:27:35,530 --> 00:27:37,690
+do practically everything in scientific
+
+652
+00:27:37,690 --> 00:27:40,000
+computing and what you will find is that
+
+653
+00:27:40,000 --> 00:27:41,980
+you're far more productive that you will
+
+654
+00:27:41,980 --> 00:27:44,559
+be able to use state-of-the-art methods
+
+655
+00:27:44,559 --> 00:27:46,540
+and that your code will have far fewer
+
+656
+00:27:46,540 --> 00:27:49,080
+bugs than if you had to do it yourself
+
+657
+00:27:49,080 --> 00:27:52,720
+as a final pitch maybe if you're a
+
+658
+00:27:52,720 --> 00:27:54,070
+graduate student and you're watching
+
+659
+00:27:54,070 --> 00:27:55,840
+these classes one of the things that
+
+660
+00:27:55,840 --> 00:27:57,550
+have seen over and over again is that
+
+661
+00:27:57,550 --> 00:27:59,650
+because the time to come up with the
+
+662
+00:27:59,650 --> 00:28:01,780
+first version of the code is so short so
+
+663
+00:28:01,780 --> 00:28:03,580
+much shorter than if you had to write it
+
+664
+00:28:03,580 --> 00:28:04,559
+all yourself
+
+665
+00:28:04,559 --> 00:28:08,670
+you will get pictures very quickly and
+
+666
+00:28:08,670 --> 00:28:12,300
+invariably it impresses your adviser so
+
+667
+00:28:12,300 --> 00:28:15,760
+take that as one of the positive aspects
+
+668
+00:28:15,760 --> 00:28:18,370
+of this so with this I'll leave this
+
+669
+00:28:18,370 --> 00:28:20,860
+class you know or this lecture and we'll
+
+670
+00:28:20,860 --> 00:28:22,540
+cover all of the things that have talked
+
+671
+00:28:22,540 --> 00:28:24,220
+about in much more detail during the
+
+672
+00:28:24,220 --> 00:28:27,030
+rest of this semester this course and
+
+673
+00:28:27,030 --> 00:28:29,380
+I'll come back to many of these issues
+
+674
+00:28:29,380 --> 00:28:31,890
+at a later time
+
+675
+00:28:32,029 --> 00:28:34,090
+you
+
+676
+00:28:35,420 --> 00:28:37,480
+you
+
